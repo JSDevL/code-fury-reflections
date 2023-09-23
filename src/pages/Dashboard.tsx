@@ -1,7 +1,7 @@
 import {useState} from "react";
 import {useAuthState, useSignOut} from "react-firebase-hooks/auth";
 import {auth} from "../firebase/app.ts";
-import {useNavigate} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 import {User} from "firebase/auth";
 import {Logo} from "../components/Logo.tsx";
 
@@ -67,13 +67,6 @@ export const Dashboard = () => {
     return <></>;
   }
 
-  // Replace javascript:void(0) path with your path
-  const navigation = [
-    { title: "Customers", path: "javascript:void(0)" },
-    { title: "Careers", path: "javascript:void(0)" },
-    { title: "Guides", path: "javascript:void(0)" },
-    { title: "Partners", path: "javascript:void(0)" },
-  ];
   return (
     <nav className="bg-white border-b">
       <div className="flex items-center space-x-8 py-3 px-4 max-w-screen-xl mx-auto md:px-8">
@@ -87,11 +80,9 @@ export const Dashboard = () => {
             }`}
           >
             <ul className="mt-12 space-y-5 lg:flex lg:space-x-6 lg:space-y-0 lg:mt-0">
-              {navigation.map((item, idx) => (
-                <li key={idx} className="text-gray-600 hover:text-gray-900">
-                  <a href={item.path}>{item.title}</a>
-                </li>
-              ))}
+              <li className="text-gray-600 hover:text-gray-900">
+                <Link to={""}>Customers</Link>
+              </li>
             </ul>
             <ProfileDropDown class="mt-5 pt-5 border-t lg:hidden" user={user} />
           </div>
