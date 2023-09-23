@@ -1,19 +1,27 @@
 import {
   useAuthState,
-  useSignInWithEmailAndPassword,
+  useCreateUserWithEmailAndPassword,
   useSignInWithGoogle,
 } from "react-firebase-hooks/auth";
 import { auth } from "../firebase/app.ts";
 import { useCallback, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 
-export const Login = () => {
+export const SignUp = () => {
   const [emailLoginForm, setEmailLoginForm] = useState({
     email: "",
     password: "",
   });
 
-  const [signInWithEmailAndPassword] = useSignInWithEmailAndPassword(auth);
+  const [createUserWithEmailAndPassword] = useCreateUserWithEmailAndPassword(
+    auth,
+    {
+      sendEmailVerification: true,
+      emailVerificationOptions: {
+        url: window.location.href,
+      },
+    },
+  );
   const [signInWithGoogle] = useSignInWithGoogle(auth);
   const navigate = useNavigate();
 
@@ -23,12 +31,12 @@ export const Login = () => {
     },
   });
 
-  const onSignInClick = useCallback(async () => {
-    await signInWithEmailAndPassword(
+  const onSignUpClick = useCallback(async () => {
+    await createUserWithEmailAndPassword(
       emailLoginForm.email,
       emailLoginForm.password,
     );
-  }, [signInWithEmailAndPassword, emailLoginForm]);
+  }, [createUserWithEmailAndPassword, emailLoginForm]);
 
   const onContinueWithGoogleClick = useCallback(async () => {
     await signInWithGoogle();
@@ -44,15 +52,15 @@ export const Login = () => {
         <div className="text-center">
           <div className="mt-5 space-y-2">
             <h3 className="text-gray-800 text-2xl font-bold sm:text-3xl">
-              Log in to your account
+              Create an account
             </h3>
             <p className="">
-              Don't have an account?{" "}
+              Already have an account?{" "}
               <Link
-                to="/sign-up"
+                to="/login"
                 className="font-medium text-indigo-600 hover:text-indigo-500"
               >
-                Sign up
+                Login
               </Link>
             </p>
           </div>
@@ -87,9 +95,9 @@ export const Login = () => {
           </div>
           <button
             className="w-full mt-4 px-4 py-2 text-white font-medium bg-indigo-600 hover:bg-indigo-500 active:bg-indigo-600 rounded-lg duration-150"
-            onClick={onSignInClick}
+            onClick={onSignUpClick}
           >
-            Sign in
+            Sign Up
           </button>
         </form>
         <div className="relative">

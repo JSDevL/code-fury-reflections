@@ -20,7 +20,9 @@ const ProfileDropDown = (props: { class: string; user: User }) => {
           <img
             src={
               props.user.photoURL ||
-              `https://ui-avatars.com/api/?name=${props.user.displayName}`
+              `https://ui-avatars.com/api/?name=${
+                props.user.displayName || props.user.email
+              }`
             }
             className="w-full h-full rounded-full"
           />
